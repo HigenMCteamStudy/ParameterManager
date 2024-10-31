@@ -25,7 +25,7 @@ TEST_DIR = test
 TEST_SRCS = $(TEST_DIR)/ParameterTest.cpp
 
 TEST_TARGET = tests
-MAIN_TARGET = parameterManager
+MAIN_TARGET = parametermanager
 
 # 환경 변수 체크
 ifdef CPPUTEST_HOME

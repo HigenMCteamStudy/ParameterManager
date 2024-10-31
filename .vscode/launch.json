@@ -1,0 +1,19 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+	  {
+			"name": "Launch",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/parametermanager", // 디버깅할 프로그램의 경로
+			"args": [], // 프로그램 실행 시 전달할 인수
+			"stopAtEntry": true, // 시작 시 첫 줄에서 멈추지 않음
+			"cwd": "${workspaceFolder}", // 현재 작업 디렉토리
+			"externalConsole": false, // 외부 콘솔 사용 여부
+			"MIMode": "gdb", // 사용할 디버거 모드
+			"miDebuggerPath": "/usr/bin/gdb", // gdb 경로 (OS에 따라 수정 필요)
+			"preLaunchTask": "Build", // 디버깅 전 실행할 task.json의 작업 이름 (비워 둘 수 있음)
+			"internalConsoleOptions": "openOnSessionStart" // 디버깅 시작 시 콘솔 창 열기
+	  }
+	]
+}
