@@ -76,7 +76,7 @@ static void OutputByType(LinkedList_t * p_temp);
 
 void LinkedList_Create(LinkedList_t ** p_addr)
 {
-	// TODO : Initialize Linked List Start pointer
+	*p_addr = NULL; // TODO : Initialize Linked List Start pointer
 }
 
 LinkedList_t * LinkedList_Append(LinkedList_t * p_addr, uint16_t index)
