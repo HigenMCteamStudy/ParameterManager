@@ -76,10 +76,10 @@ static void OutputByType(LinkedList_t * p_temp);
 
 void LinkedList_Create(LinkedList_t ** p_addr)
 {
-	// TODO : Initialize Linked List Start pointer
+	*p_addr = NULL; // TODO : Initialize Linked List Start pointer
 }
 
-void LinkedList_Append(LinkedList_t ** p_addr, uint16_t index)
+LinkedList_t * LinkedList_Append(LinkedList_t * p_addr, uint16_t index)
 {
 	LinkedList_t * p_new;
 	LinkedList_t * p_last = p_addr;
@@ -114,17 +114,17 @@ void LinkedList_Print(LinkedList_t * p_addr)
 	// TODO : Print data of Linked List Objects
 }
 
-void LinkedList_Delete(LinkedList_t** p_addr, uint16_t index)
+LinkedList_t * LinkedList_Delete(LinkedList_t* p_addr, uint16_t index)
 {
 	// TODO : Delete Linked List Object with index
 }
 
-void LinkedList_AllDelete(LinkedList_t** p_addr)
+LinkedList_t * LinkedList_AllDelete(LinkedList_t * p_addr)
 {
 	// TODO : Delete All Linked List Objects
 }
 
-void LinkedList_Insert(LinkedList_t ** p_addr, uint16_t index)
+LinkedList_t * LinkedList_Insert(LinkedList_t * p_addr, uint16_t index)
 {
 	// TODO : Insert Linked List Object with index
 }
@@ -134,7 +134,7 @@ LinkedList_t * LinkedList_Search(LinkedList_t * p_addr, uint16_t index)
 	// TODO : Search Linked List Object with index
 }
 
-void LinkedList_DesTroy(LinkedList_t ** p_addr)
+LinkedList_t * LinkedList_DesTroy(LinkedList_t * p_addr)
 {
 	// TODO : De-Initialize Linked List Objects
 }
