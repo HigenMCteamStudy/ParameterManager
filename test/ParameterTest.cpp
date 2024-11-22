@@ -47,7 +47,7 @@ TEST_GROUP(ParameterManager)
 	}
 	void teardown()
 	{
-		LinkedList_DesTroy(&p_addr);
+		p_addr = LinkedList_DesTroy(p_addr);
 	}
 	void Count_nodeNum(LinkedList_t * p_addr, int nodeNum)
 	{
@@ -106,21 +106,21 @@ TEST(ParameterManager, CreatePM)
 }
 TEST(ParameterManager, AddPM)
 {
-	LinkedList_Append(&p_addr, 0x0000);
-	LinkedList_Append(&p_addr, 0x0000);
-	LinkedList_Append(&p_addr, 0x0000);
+	p_addr = LinkedList_Append(p_addr, 0x0000);
+	p_addr = LinkedList_Append(p_addr, 0x0000);
+	p_addr = LinkedList_Append(p_addr, 0x0000);
 	Count_nodeNum(p_addr, 3);
 }
 TEST(ParameterManager, PrintPM)
 {
 	uint16_t data = 1;
 	//테스트 케이스 1.1
-	LinkedList_Append(&p_addr, 0x0000);
-	LinkedList_Append(&p_addr, 0x0001);
-	LinkedList_Append(&p_addr, 0x0002);
-	LinkedList_Append(&p_addr, 0x0003);
+	p_addr = LinkedList_Append(p_addr, 0x0000);
+	p_addr = LinkedList_Append(p_addr, 0x0001);
+	p_addr = LinkedList_Append(p_addr, 0x0002);
+	p_addr = LinkedList_Append(p_addr, 0x0003);
 	// Invalid index number
-	LinkedList_Append(&p_addr, 0x0009);
+	p_addr = LinkedList_Append(p_addr, 0x0009);
 	LinkedList_InputData(p_addr, 0x0000, (void *)&data);
 	data++;
 	LinkedList_InputData(p_addr, 0x0001, (void *)&data);
@@ -129,42 +129,42 @@ TEST(ParameterManager, PrintPM)
 	data++;
 	LinkedList_InputData(p_addr, 0x0003, (void *)&data);
 	//테스트 케이스 1.2
-	// LinkedList_Print(p_addr);
+	LinkedList_Print(p_addr);
 	Count_nodeNum(p_addr, 4);
 }
 TEST(ParameterManager, DeletePM)
 {
-	LinkedList_Append(&p_addr, 0x0000);
-	LinkedList_Append(&p_addr, 0x0001);
-	LinkedList_Append(&p_addr, 0x0002);
-	LinkedList_Append(&p_addr, 0x0003);
+	p_addr = LinkedList_Append(p_addr, 0x0000);
+	p_addr = LinkedList_Append(p_addr, 0x0001);
+	p_addr = LinkedList_Append(p_addr, 0x0002);
+	p_addr = LinkedList_Append(p_addr, 0x0003);
 	//테스트 케이스 1.3
-	LinkedList_Delete(&p_addr, 0x0003);
+	p_addr = LinkedList_Delete(p_addr, 0x0003);
 	//테스트 케이스 1.4
-	LinkedList_Delete(&p_addr, 0x0005);
-	LinkedList_Print(p_addr);
+	p_addr = LinkedList_Delete(p_addr, 0x0005);
+	// LinkedList_Print(p_addr);
 	Count_nodeNum(p_addr, 3);
 }
 
 TEST(ParameterManager, InsertingObjects)
 {
-	LinkedList_Append(&p_addr, 0x0000);
-	LinkedList_Append(&p_addr, 0x0003);
+	p_addr = LinkedList_Append(p_addr, 0x0000);
+	p_addr = LinkedList_Append(p_addr, 0x0003);
 	//테스트 케이스 2.1
-	LinkedList_Insert(&p_addr, 0x0002);
+	p_addr = LinkedList_Insert(p_addr, 0x0002);
 	//테스트 케이스 2.2
-	LinkedList_Insert(&p_addr, 0x0004);
-	// LinkedList_Print(p_addr);
+	p_addr = LinkedList_Insert(p_addr, 0x0004);
+	LinkedList_Print(p_addr);
 	Count_nodeNum(p_addr, 4);
 }
 
 TEST(ParameterManager, SearchObject)
 {
 	LinkedList_t * p_target;
-	LinkedList_Append(&p_addr, 0x0000);
-	LinkedList_Append(&p_addr, 0x0003);
-	LinkedList_Insert(&p_addr, 0x0002);
-	LinkedList_Insert(&p_addr, 0x0004);
+	p_addr = LinkedList_Append(p_addr, 0x0000);
+	p_addr = LinkedList_Append(p_addr, 0x0003);
+	p_addr = LinkedList_Insert(p_addr, 0x0002);
+	p_addr = LinkedList_Insert(p_addr, 0x0004);
 	//테스트 케이스 3.1
 	p_target = LinkedList_Search(p_addr, 0x0003);
 	compare_target(p_target);
@@ -178,12 +178,12 @@ TEST(ParameterManager, SearchObject)
 TEST(ParameterManager, DeleteAllObject)
 {
 	//테스트 4.2
-	LinkedList_AllDelete(&p_addr);
-	LinkedList_Append(&p_addr, 0x0000);
-	LinkedList_Append(&p_addr, 0x0003);
-	LinkedList_Insert(&p_addr, 0x0002);
-	LinkedList_Insert(&p_addr, 0x0004);
+	p_addr = LinkedList_AllDelete(p_addr);
+	p_addr = LinkedList_Append(p_addr, 0x0000);
+	p_addr = LinkedList_Append(p_addr, 0x0003);
+	p_addr = LinkedList_Insert(p_addr, 0x0002);
+	p_addr = LinkedList_Insert(p_addr, 0x0004);
 	//테스트 4.1
-	LinkedList_AllDelete(&p_addr);
+	p_addr = LinkedList_AllDelete(p_addr);
 	Count_nodeNum(p_addr, 0);
 }

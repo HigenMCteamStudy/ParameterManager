@@ -79,19 +79,20 @@ void LinkedList_Create(LinkedList_t ** p_addr)
 	*p_addr = NULL;
 }
 
-void LinkedList_Append(LinkedList_t ** p_addr, uint16_t index)
+LinkedList_t * LinkedList_Append(LinkedList_t * p_addr, uint16_t index)
 {
 	LinkedList_t * p_new;
-	LinkedList_t * p_last = *p_addr;
+	LinkedList_t * p_last = p_addr;
 
 	p_new = (LinkedList_t *)malloc(sizeof(LinkedList_t));
 	if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
-		return;
+		return p_addr;
 	}
 
-	if(NULL == *p_addr) {
-		*p_addr = p_new;
-		return;
+	p_new->p_next = NULL;
+
+	if(NULL == p_addr) {
+		return p_new;
 	}
 
 	while(NULL != p_last->p_next) {
@@ -99,6 +100,8 @@ void LinkedList_Append(LinkedList_t ** p_addr, uint16_t index)
 	}
 
 	p_last->p_next = p_new;
+
+	return p_addr;
 }
 
 void LinkedList_InputData(LinkedList_t * p_addr, uint16_t index, void * data)
@@ -156,45 +159,48 @@ void LinkedList_Print(LinkedList_t * p_addr)
     printf("[LinkedList_Print]finish\n");
 }
 
-void LinkedList_Delete(LinkedList_t** p_addr, uint16_t index) {
+LinkedList_t * LinkedList_Delete(LinkedList_t* p_addr, uint16_t index) {
 	LinkedList_t * p_prev;
 	LinkedList_t * p_target;
 
-	p_target = IndexTraversalSearch(*p_addr, &p_prev, index);
+	p_target = IndexTraversalSearch(p_addr, &p_prev, index);
 
 	if(NULL == p_target) {
 		printf("[LinkedList_Delete]No object with index value\n");
-		return;
+		return p_addr;
 	}
 
-	if(*p_addr == p_target) {
-		*p_addr = p_target->p_next;
+	if(p_addr == p_target) {
+		p_addr = p_target->p_next;
 	}
 	else {
 		p_prev->p_next = p_target->p_next;
 	}
+
 	free(p_target);
+	return p_addr;
 }
 
-void LinkedList_AllDelete(LinkedList_t** p_addr) {
+LinkedList_t * LinkedList_AllDelete(LinkedList_t * p_addr) {
 	LinkedList_t * p_temp;
 
-	if(NULL == *p_addr) {
+	if(NULL == p_addr) {
 		printf("[LinkedList_AllDelete]Not exist object\n");
-		return;
+		return p_addr;
 	}
 
-	while(NULL != (*p_addr)) {
-		p_temp = (*p_addr)->p_next;
-		free((*p_addr));
-		(*p_addr) = p_temp;
+	while(NULL != p_addr) {
+		p_temp = p_addr->p_next;
+		free(p_addr);
+		p_addr = p_temp;
 	}
+	return p_addr;
 }
 
-void LinkedList_Insert(LinkedList_t ** p_addr, uint16_t index)
+LinkedList_t * LinkedList_Insert(LinkedList_t * p_addr, uint16_t index)
 {
-	LinkedList_t * p_temp = *p_addr;
-	LinkedList_t * p_prev = *p_addr;;
+	LinkedList_t * p_temp = p_addr;
+	LinkedList_t * p_prev = p_addr;
 	LinkedList_t * p_new;
 
 	p_new = (LinkedList_t *)malloc(sizeof(LinkedList_t));
@@ -202,23 +208,23 @@ void LinkedList_Insert(LinkedList_t ** p_addr, uint16_t index)
 	if((NULL != p_temp) && (p_temp->pd.md_index > index)) {
 		if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
 			printf("[LinkedList_Insert]Invalid index number\n");
-			return;
+			return p_addr;
 		}
 		p_new->p_next = p_temp;
-		*p_addr = p_new;
-		return;
+		p_addr = p_new;
+		return p_addr;
 	}
 
 	while((NULL != p_temp)) {
 		if((p_prev->pd.md_index <= index) && (p_temp->pd.md_index > index)) {
 			if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
 				printf("[LinkedList_Insert]Invalid index number\n");
-				return;
+				return p_addr;
 			}
 
 			p_new->p_next = p_prev->p_next;
 			p_prev->p_next = p_new;
-			return;
+			return p_addr;
 		}
 
 		p_prev = p_temp;
@@ -228,18 +234,20 @@ void LinkedList_Insert(LinkedList_t ** p_addr, uint16_t index)
 	if((NULL == p_temp) && (p_prev->pd.md_index <= index)) {
 		if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
 			printf("[LinkedList_Insert]Invalid index number\n");
-			return;
+			return p_addr;
 		}
 		p_new->p_next = NULL;
 		p_prev->p_next = p_new;
 		p_temp = p_new;
-		return;
+		return p_addr;
 	}
 
 	if(NULL == p_temp->p_next) {
 		printf("[LinkedList_Insert]No object with index value\n");
-		return;
+		return p_addr;
 	}
+
+	return p_addr;
 }
 
 LinkedList_t * LinkedList_Search(LinkedList_t * p_addr, uint16_t index)
@@ -257,20 +265,21 @@ LinkedList_t * LinkedList_Search(LinkedList_t * p_addr, uint16_t index)
 	return p_target;
 }
 
-void LinkedList_DesTroy(LinkedList_t ** p_addr)
+LinkedList_t * LinkedList_DesTroy(LinkedList_t * p_addr)
 {
 	LinkedList_t * p_temp;
 
-	if(NULL == *p_addr) {
+	if(NULL == p_addr) {
 		printf("[LinkedList_DesTroy]Not exist object\n");
-		return;
+		return p_addr;
 	}
 
-	while(NULL != (*p_addr)) {
-		p_temp = (*p_addr)->p_next;
-		free((*p_addr));
-		(*p_addr) = p_temp;
+	while(NULL != p_addr) {
+		p_temp = p_addr->p_next;
+		free(p_addr);
+		p_addr = p_temp;
 	}
+	return p_addr;
 }
 
 static LinkedList_t * IndexTraversalSearch(LinkedList_t * p_addr,
