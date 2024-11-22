@@ -76,17 +76,70 @@ static void OutputByType(LinkedList_t * p_temp);
 
 void LinkedList_Create(LinkedList_t ** p_addr)
 {
-	// TODO : Initialize Linked List Start pointer
+	*p_addr = NULL; // TODO : Initialize Linked List Start pointer
 }
 
-void LinkedList_Append(LinkedList_t ** p_addr, uint16_t index)
+LinkedList_t * LinkedList_Append(LinkedList_t * p_addr, uint16_t index)
 {
-	// TODO : Append Linked List Object
+	LinkedList_t * p_new;
+	LinkedList_t * p_last = p_addr;
+
+	p_new = (LinkedList_t *)malloc(sizeof(LinkedList_t));
+	if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
+		return p_addr;
+	}
+
+	p_new->p_next = NULL;
+
+	if(NULL == p_addr) {
+		return p_new;
+	}
+
+	while(NULL != p_last->p_next) {
+		p_last = p_last->p_next;
+	}
+
+	p_last->p_next = p_new;
+
+	return p_addr;
 }
 
 void LinkedList_InputData(LinkedList_t * p_addr, uint16_t index, void * data)
 {
-	// TODO : Input data to Linked List Object
+	LinkedList_t * p_last = p_addr;
+
+	while((NULL != p_last) && (p_last->pd.md_index != index)) {
+		p_last = p_last->p_next;
+	}
+
+	if(NULL == p_last) {
+		printf("[LinkedList_InputData]No object with index value");
+		return;
+	}
+
+	switch (p_last->pd.type)
+	{
+	case P_TYPE_INT32_T:
+		*(int32_t *)p_last->pd.p_data = *(int32_t *)data;
+		break;
+	case P_TYPE_UINT32_T:
+		*(uint32_t *)p_last->pd.p_data = *(uint32_t *)data;
+		break;
+	case P_TYPE_INT16_T:
+		*(int16_t *)p_last->pd.p_data = *(int16_t *)data;
+		break;
+	case P_TYPE_UINT16_T:
+		*(uint16_t *)p_last->pd.p_data = *(uint16_t *)data;
+		break;
+	case P_TYPE_INT8_T:
+		*(int8_t *)p_last->pd.p_data = *(int8_t *)data;
+		break;
+	case P_TYPE_UINT8_T:
+		*(uint8_t *)p_last->pd.p_data = *(uint8_t *)data;
+		break;
+	default:
+		break;
+	}// TODO : Input data to Linked List Object
 }
 
 void LinkedList_Print(LinkedList_t * p_addr)
@@ -106,17 +159,17 @@ void LinkedList_Print(LinkedList_t * p_addr)
     printf("[LinkedList_Print]finish\n");
 }
 
-void LinkedList_Delete(LinkedList_t** p_addr, uint16_t index)
+LinkedList_t * LinkedList_Delete(LinkedList_t* p_addr, uint16_t index)
 {
 	// TODO : Delete Linked List Object with index
 }
 
-void LinkedList_AllDelete(LinkedList_t** p_addr)
+LinkedList_t * LinkedList_AllDelete(LinkedList_t * p_addr)
 {
 	// TODO : Delete All Linked List Objects
 }
 
-void LinkedList_Insert(LinkedList_t ** p_addr, uint16_t index)
+LinkedList_t * LinkedList_Insert(LinkedList_t * p_addr, uint16_t index)
 {
 	// TODO : Insert Linked List Object with index
 }
@@ -126,7 +179,7 @@ LinkedList_t * LinkedList_Search(LinkedList_t * p_addr, uint16_t index)
 	// TODO : Search Linked List Object with index
 }
 
-void LinkedList_DesTroy(LinkedList_t ** p_addr)
+LinkedList_t * LinkedList_DesTroy(LinkedList_t * p_addr)
 {
 	// TODO : De-Initialize Linked List Objects
 }

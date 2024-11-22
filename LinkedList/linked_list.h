@@ -51,7 +51,7 @@ struct LinkedList
  *
  * @param p_addr A pointer to the linked list's starting address pointer.
  */
-void LinkedList_Create(LinkedList_t ** p_Addr);
+void LinkedList_Create(LinkedList_t ** p_addr);
 
 /**
  * @brief Appends a new node to the end of the linked list.
@@ -59,7 +59,7 @@ void LinkedList_Create(LinkedList_t ** p_Addr);
  * @param p_addr A pointer to the pointer of the starting address of the linked list.
  * @param index The index for retrieving profile data to store in the new node.
  */
-void LinkedList_Append(LinkedList_t ** p_addr, uint16_t index);
+LinkedList_t * LinkedList_Append(LinkedList_t * p_addr, uint16_t index);
 
 /**
  * @brief Inputs data into the specified node by index, using the node's type to handle casting.
@@ -83,14 +83,14 @@ void LinkedList_Print(LinkedList_t * p_addr);
  * @param p_addr A pointer to the pointer of the starting address of the linked list.
  * @param index The index of the node to delete.
  */
-void LinkedList_Delete(LinkedList_t** p_addr, uint16_t index);
+LinkedList_t * LinkedList_Delete(LinkedList_t* p_addr, uint16_t index);
 
 /**
  * @brief Deletes all nodes in the linked list and frees their allocated memory.
  *
  * @param p_addr A pointer to the pointer of the starting address of the linked list.
  */
-void LinkedList_AllDelete(LinkedList_t** p_addr);
+LinkedList_t * LinkedList_AllDelete(LinkedList_t * p_addr) ;
 
 /**
  * @brief Inserts a new node at a specific index in the linked list.
@@ -98,7 +98,7 @@ void LinkedList_AllDelete(LinkedList_t** p_addr);
  * @param p_addr A pointer to the pointer of the starting address of the linked list.
  * @param index The index for the new node.
  */
-void LinkedList_Insert(LinkedList_t ** p_addr, uint16_t index);
+LinkedList_t * LinkedList_Insert(LinkedList_t * p_addr, uint16_t index);
 
 /**
  * @brief Searches for a node at a specific index in the linked list.
@@ -115,7 +115,7 @@ LinkedList_t * LinkedList_Search(LinkedList_t * p_addr, uint16_t index);
  *
  * @param p_addr A pointer to the pointer of the starting address of the linked list.
  */
-void LinkedList_DesTroy(LinkedList_t ** p_addr);
+LinkedList_t * LinkedList_DesTroy(LinkedList_t * p_addr);
 
 
 #endif // LINKED_LIST_H
