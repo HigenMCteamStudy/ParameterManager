@@ -76,210 +76,47 @@ static void OutputByType(LinkedList_t * p_temp);
 
 void LinkedList_Create(LinkedList_t ** p_addr)
 {
-	*p_addr = NULL;
+	// TODO : Initialize Linked List Start pointer
 }
 
 LinkedList_t * LinkedList_Append(LinkedList_t * p_addr, uint16_t index)
 {
-	LinkedList_t * p_new;
-	LinkedList_t * p_last = p_addr;
-
-	p_new = (LinkedList_t *)malloc(sizeof(LinkedList_t));
-	if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
-		return p_addr;
-	}
-
-	p_new->p_next = NULL;
-
-	if(NULL == p_addr) {
-		return p_new;
-	}
-
-	while(NULL != p_last->p_next) {
-		p_last = p_last->p_next;
-	}
-
-	p_last->p_next = p_new;
-
-	return p_addr;
+	// TODO : Append Linked List Object
 }
 
 void LinkedList_InputData(LinkedList_t * p_addr, uint16_t index, void * data)
 {
-	LinkedList_t * p_last = p_addr;
-
-	while((NULL != p_last) && (p_last->pd.md_index != index)) {
-		p_last = p_last->p_next;
-	}
-
-	if(NULL == p_last) {
-		printf("[LinkedList_InputData]No object with index value");
-		return;
-	}
-
-	switch (p_last->pd.type)
-	{
-	case P_TYPE_INT32_T:
-		*(int32_t *)p_last->pd.p_data = *(int32_t *)data;
-		break;
-	case P_TYPE_UINT32_T:
-		*(uint32_t *)p_last->pd.p_data = *(uint32_t *)data;
-		break;
-	case P_TYPE_INT16_T:
-		*(int16_t *)p_last->pd.p_data = *(int16_t *)data;
-		break;
-	case P_TYPE_UINT16_T:
-		*(uint16_t *)p_last->pd.p_data = *(uint16_t *)data;
-		break;
-	case P_TYPE_INT8_T:
-		*(int8_t *)p_last->pd.p_data = *(int8_t *)data;
-		break;
-	case P_TYPE_UINT8_T:
-		*(uint8_t *)p_last->pd.p_data = *(uint8_t *)data;
-		break;
-	default:
-		break;
-	}
+	// TODO : Input data to Linked List Object
 }
 
 void LinkedList_Print(LinkedList_t * p_addr)
 {
-	LinkedList_t * p_last = p_addr;
-	int count = 0;
-
-    while (NULL != p_last) {
-		printf("[LinkedList_Print]Node Number : %d\n",++count);
-		printf("[LinkedList_Print]index : %d\n", p_last->pd.md_index);
-
-		OutputByType(p_last);
-		printf("*****************************************\n");
-
-        p_last = p_last->p_next;
-    }
-    printf("[LinkedList_Print]finish\n");
+	// TODO : Print data of Linked List Objects
 }
 
-LinkedList_t * LinkedList_Delete(LinkedList_t* p_addr, uint16_t index) {
-	LinkedList_t * p_prev;
-	LinkedList_t * p_target;
-
-	p_target = IndexTraversalSearch(p_addr, &p_prev, index);
-
-	if(NULL == p_target) {
-		printf("[LinkedList_Delete]No object with index value\n");
-		return p_addr;
-	}
-
-	if(p_addr == p_target) {
-		p_addr = p_target->p_next;
-	}
-	else {
-		p_prev->p_next = p_target->p_next;
-	}
-
-	free(p_target);
-	return p_addr;
+LinkedList_t * LinkedList_Delete(LinkedList_t* p_addr, uint16_t index)
+{
+	// TODO : Delete Linked List Object with index
 }
 
-LinkedList_t * LinkedList_AllDelete(LinkedList_t * p_addr) {
-	LinkedList_t * p_temp;
-
-	if(NULL == p_addr) {
-		printf("[LinkedList_AllDelete]Not exist object\n");
-		return p_addr;
-	}
-
-	while(NULL != p_addr) {
-		p_temp = p_addr->p_next;
-		free(p_addr);
-		p_addr = p_temp;
-	}
-	return p_addr;
+LinkedList_t * LinkedList_AllDelete(LinkedList_t * p_addr)
+{
+	// TODO : Delete All Linked List Objects
 }
 
 LinkedList_t * LinkedList_Insert(LinkedList_t * p_addr, uint16_t index)
 {
-	LinkedList_t * p_temp = p_addr;
-	LinkedList_t * p_prev = p_addr;
-	LinkedList_t * p_new;
-
-	p_new = (LinkedList_t *)malloc(sizeof(LinkedList_t));
-
-	if((NULL != p_temp) && (p_temp->pd.md_index > index)) {
-		if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
-			printf("[LinkedList_Insert]Invalid index number\n");
-			return p_addr;
-		}
-		p_new->p_next = p_temp;
-		p_addr = p_new;
-		return p_addr;
-	}
-
-	while((NULL != p_temp)) {
-		if((p_prev->pd.md_index <= index) && (p_temp->pd.md_index > index)) {
-			if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
-				printf("[LinkedList_Insert]Invalid index number\n");
-				return p_addr;
-			}
-
-			p_new->p_next = p_prev->p_next;
-			p_prev->p_next = p_new;
-			return p_addr;
-		}
-
-		p_prev = p_temp;
-		p_temp = p_temp->p_next;
-	}
-
-	if((NULL == p_temp) && (p_prev->pd.md_index <= index)) {
-		if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
-			printf("[LinkedList_Insert]Invalid index number\n");
-			return p_addr;
-		}
-		p_new->p_next = NULL;
-		p_prev->p_next = p_new;
-		p_temp = p_new;
-		return p_addr;
-	}
-
-	if(NULL == p_temp->p_next) {
-		printf("[LinkedList_Insert]No object with index value\n");
-		return p_addr;
-	}
-
-	return p_addr;
+	// TODO : Insert Linked List Object with index
 }
 
 LinkedList_t * LinkedList_Search(LinkedList_t * p_addr, uint16_t index)
 {
-	LinkedList_t * p_target;
-	LinkedList_t * p_prev;
-
-	p_target = IndexTraversalSearch(p_addr, &p_prev, index);
-
-	if(NULL == p_target) {
-		printf("[LinkedList_Search]No object with index value\n");
-		return NULL;
-	}
-
-	return p_target;
+	// TODO : Search Linked List Object with index
 }
 
 LinkedList_t * LinkedList_DesTroy(LinkedList_t * p_addr)
 {
-	LinkedList_t * p_temp;
-
-	if(NULL == p_addr) {
-		printf("[LinkedList_DesTroy]Not exist object\n");
-		return p_addr;
-	}
-
-	while(NULL != p_addr) {
-		p_temp = p_addr->p_next;
-		free(p_addr);
-		p_addr = p_temp;
-	}
-	return p_addr;
+	// TODO : De-Initialize Linked List Objects
 }
 
 static LinkedList_t * IndexTraversalSearch(LinkedList_t * p_addr,
