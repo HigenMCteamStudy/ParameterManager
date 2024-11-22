@@ -43,7 +43,7 @@ static int Count_nodeNum(LinkedList_t * p_addr);
 
 int main(void)
 {
-	LinkedList_t * p_addr;
+	LinkedList_t * p_addr = NULL;
 	LinkedList_t * p_target;
 	uint16_t data = 1234;
 	int count;
@@ -52,18 +52,18 @@ int main(void)
 
 	//Stage 1
 	//객체가 하나도 만들어 지지 않았을 때 삭제/전체 삭제를 하여도 아무 반응이 없어야 함
-	LinkedList_Delete(&p_addr, 0x0000);
-	LinkedList_AllDelete(&p_addr);
+	p_addr = LinkedList_Delete(p_addr, 0x0000);
+	p_addr = LinkedList_AllDelete(p_addr);
 
 	//index를 가진 객체 생성
-	LinkedList_Append(&p_addr, 0x0000);
-	LinkedList_Append(&p_addr, 0x0004);
+	p_addr = LinkedList_Append(p_addr, 0x0000);
+	p_addr = LinkedList_Append(p_addr, 0x0004);
 
 	//index를 가진 객체 생성 및 index를 보고 정렬되게 삽입
-	LinkedList_Insert(&p_addr, 0x0002);
-	LinkedList_Insert(&p_addr, 0x0001);
-	LinkedList_Append(&p_addr, 0x0300);
-	LinkedList_Append(&p_addr, 0x0301);
+	p_addr = LinkedList_Insert(p_addr, 0x0002);
+	p_addr = LinkedList_Insert(p_addr, 0x0001);
+	p_addr = LinkedList_Append(p_addr, 0x0300);
+	p_addr = LinkedList_Append(p_addr, 0x0301);
 	//객체 개수 리턴
 	count = Count_nodeNum(p_addr);
 	//객체 개수 출력
@@ -72,10 +72,10 @@ int main(void)
 
 	//Stage 2
 	//객체 제거(활성화된 index가 아닐 시 무시)
-	LinkedList_Delete(&p_addr, 0x0100);
-	LinkedList_Delete(&p_addr, 0x0000);
-	LinkedList_Delete(&p_addr, 0x0004);
-	LinkedList_Delete(&p_addr, 0x0301);
+	p_addr = LinkedList_Delete(p_addr, 0x0100);
+	p_addr = LinkedList_Delete(p_addr, 0x0000);
+	p_addr = LinkedList_Delete(p_addr, 0x0004);
+	p_addr = LinkedList_Delete(p_addr, 0x0301);
 
 	count = Count_nodeNum(p_addr);
 	printf("Stage 2-1. As of now, the number of nodes is %d.\n", count);
@@ -102,23 +102,24 @@ int main(void)
 
 	//Stage 5
 	//모든 객체 삭제 후 개수 출력
-	LinkedList_AllDelete(&p_addr);
+	p_addr = LinkedList_AllDelete(p_addr);
 	count = Count_nodeNum(p_addr);
 	printf("Stage 5-1. As of now, the number of nodes is %d.\n", count);
 	//객체 추가 후 개수 출력
-	LinkedList_Append(&p_addr, 0x0000);
-	LinkedList_Append(&p_addr, 0x0004);
+	p_addr = LinkedList_Append(p_addr, 0x0000);
+	p_addr = LinkedList_Append(p_addr, 0x0004);
 	count = Count_nodeNum(p_addr);
 	printf("Stage 5-2. As of now, the number of nodes is %d.\n", count);
 	printf("-----------------------------------------\n");
 
 	//Stage 6
 	//객체 제거(AllDelete와 동일)
-	LinkedList_DesTroy(&p_addr);
+	p_addr = LinkedList_DesTroy(p_addr);
 	count = Count_nodeNum(p_addr);
 	printf("Stage 6-1. As of now, the number of nodes is %d.\n", count);
 	return 0;
 }
+
 static int Count_nodeNum(LinkedList_t * p_addr)
 {
 	LinkedList_t * p_last = p_addr;
