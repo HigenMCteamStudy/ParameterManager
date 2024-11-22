@@ -81,7 +81,27 @@ void LinkedList_Create(LinkedList_t ** p_addr)
 
 void LinkedList_Append(LinkedList_t ** p_addr, uint16_t index)
 {
-	// TODO : Append Linked List Object
+	LinkedList_t * p_new;
+	LinkedList_t * p_last = p_addr;
+
+	p_new = (LinkedList_t *)malloc(sizeof(LinkedList_t));
+	if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
+		return p_addr;
+	}
+
+	p_new->p_next = NULL;
+
+	if(NULL == p_addr) {
+		return p_new;
+	}
+
+	while(NULL != p_last->p_next) {
+		p_last = p_last->p_next;
+	}
+
+	p_last->p_next = p_new;
+
+	return p_addr;
 }
 
 void LinkedList_InputData(LinkedList_t * p_addr, uint16_t index, void * data)
