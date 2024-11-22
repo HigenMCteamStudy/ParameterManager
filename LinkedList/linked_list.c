@@ -91,7 +91,19 @@ void LinkedList_InputData(LinkedList_t * p_addr, uint16_t index, void * data)
 
 void LinkedList_Print(LinkedList_t * p_addr)
 {
-	// TODO : Print data of Linked List Objects
+	LinkedList_t * p_last = p_addr;
+	int count = 0;
+
+    while (NULL != p_last) {
+		printf("[LinkedList_Print]Node Number : %d\n",++count);
+		printf("[LinkedList_Print]index : %d\n", p_last->pd.md_index);
+
+		OutputByType(p_last);
+		printf("*****************************************\n");
+
+        p_last = p_last->p_next;
+    }
+    printf("[LinkedList_Print]finish\n");
 }
 
 void LinkedList_Delete(LinkedList_t** p_addr, uint16_t index)
