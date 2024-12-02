@@ -2,6 +2,7 @@
 	"files.associations": {
 		"compare": "cpp",
 		"cstdint": "cpp",
-		"parameter.h": "c"
+		"parameter.h": "c",
+		"linked_list.h": "c"
 	}
 }
