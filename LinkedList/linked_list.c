@@ -111,7 +111,17 @@ void LinkedList_Insert(LinkedList_t ** p_addr, uint16_t index)
 
 LinkedList_t * LinkedList_Search(LinkedList_t * p_addr, uint16_t index)
 {
-	// TODO : Search Linked List Object with index
+	LinkedList_t * p_target;
+	LinkedList_t * p_prev;
+
+	p_target = IndexTraversalSearch(p_addr, &p_prev, index);
+
+	if(NULL == p_target) {
+		printf("[LinkedList_Search]No object with index value\n");
+		return NULL;
+	}
+
+	return p_target;
 }
 
 void LinkedList_DesTroy(LinkedList_t ** p_addr)
