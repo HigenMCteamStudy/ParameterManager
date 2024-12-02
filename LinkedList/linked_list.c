@@ -96,7 +96,25 @@ void LinkedList_Print(LinkedList_t * p_addr)
 
 void LinkedList_Delete(LinkedList_t** p_addr, uint16_t index)
 {
-	// TODO : Delete Linked List Object with index
+	LinkedList_t * p_prev;
+	LinkedList_t * p_target;
+
+	p_target = IndexTraversalSearch(p_addr, &p_prev, index);
+
+	if(NULL == p_target) {
+		printf("[LinkedList_Delete]No object with index value\n");
+		return p_addr;
+	}
+
+	if(p_addr == p_target) {
+		p_addr = p_target->p_next;
+	}
+	else {
+		p_prev->p_next = p_target->p_next;
+	}
+
+	free(p_target);
+	return p_addr;
 }
 
 void LinkedList_AllDelete(LinkedList_t** p_addr)
