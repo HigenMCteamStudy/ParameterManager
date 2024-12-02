@@ -116,7 +116,19 @@ LinkedList_t * LinkedList_Search(LinkedList_t * p_addr, uint16_t index)
 
 void LinkedList_DesTroy(LinkedList_t ** p_addr)
 {
-	// TODO : De-Initialize Linked List Objects
+	LinkedList_t * p_temp;
+
+	if(NULL == p_addr) {
+		printf("[LinkedList_DesTroy]Not exist object\n");
+		return p_addr;
+	}
+
+	while(NULL != p_addr) {
+		p_temp = p_addr->p_next;
+		free(p_addr);
+		p_addr = p_temp;
+	}
+	return p_addr;
 }
 
 static LinkedList_t * IndexTraversalSearch(LinkedList_t * p_addr,
