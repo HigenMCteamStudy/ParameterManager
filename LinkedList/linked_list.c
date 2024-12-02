@@ -106,7 +106,55 @@ void LinkedList_AllDelete(LinkedList_t** p_addr)
 
 void LinkedList_Insert(LinkedList_t ** p_addr, uint16_t index)
 {
-	// TODO : Insert Linked List Object with index
+	LinkedList_t * p_temp = p_addr;
+	LinkedList_t * p_prev = p_addr;
+	LinkedList_t * p_new;
+
+	p_new = (LinkedList_t *)malloc(sizeof(LinkedList_t));
+
+	if((NULL != p_temp) && (p_temp->pd.md_index > index)) {
+		if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
+			printf("[LinkedList_Insert]Invalid index number\n");
+			return p_addr;
+		}
+		p_new->p_next = p_temp;
+		p_addr = p_new;
+		return p_addr;
+	}
+
+	while((NULL != p_temp)) {
+		if((p_prev->pd.md_index <= index) && (p_temp->pd.md_index > index)) {
+			if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
+				printf("[LinkedList_Insert]Invalid index number\n");
+				return p_addr;
+			}
+
+			p_new->p_next = p_prev->p_next;
+			p_prev->p_next = p_new;
+			return p_addr;
+		}
+
+		p_prev = p_temp;
+		p_temp = p_temp->p_next;
+	}
+
+	if((NULL == p_temp) && (p_prev->pd.md_index <= index)) {
+		if(LINKED_LIST_FAILURE == CopyProfileDictionary(p_new, index)) {
+			printf("[LinkedList_Insert]Invalid index number\n");
+			return p_addr;
+		}
+		p_new->p_next = NULL;
+		p_prev->p_next = p_new;
+		p_temp = p_new;
+		return p_addr;
+	}
+
+	if(NULL == p_temp->p_next) {
+		printf("[LinkedList_Insert]No object with index value\n");
+		return p_addr;
+	}
+
+	return p_addr;
 }
 
 LinkedList_t * LinkedList_Search(LinkedList_t * p_addr, uint16_t index)
