@@ -166,7 +166,20 @@ LinkedList_t * LinkedList_Delete(LinkedList_t* p_addr, uint16_t index)
 
 LinkedList_t * LinkedList_AllDelete(LinkedList_t * p_addr)
 {
-	// TODO : Delete All Linked List Objects
+	LinkedList_t * p_temp;
+
+	if(NULL == p_addr) {
+		printf("[LinkedList_AllDelete]Not exist object\n");
+		return p_addr;
+	}
+
+	while(NULL != p_addr) {
+		p_temp = p_addr->p_next;
+		free(p_addr);
+		p_addr = p_temp;
+	}
+	return p_addr;
+
 }
 
 LinkedList_t * LinkedList_Insert(LinkedList_t * p_addr, uint16_t index)
